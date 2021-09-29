@@ -2,11 +2,11 @@ import React, { ReactNode, MouseEvent } from "react";
 import "./card.css";
 
 const BASE =
-  "absolute w-full h-full text-white border-white rounded-lg border-2 cursor-pointer focus:outline-none focus:shadow-outline flex justify-center items-center";
+  "absolute w-full h-full text-white border-white rounded-lg border-2 cursor-pointer focus:outline-none focus:ring flex justify-center items-center";
 
 const SIZES = {
   sm: "w-16 h-24 text-3xl",
-  lg: "w-48 h-64 text-huge"
+  lg: "w-80 h-96 text-huge"
 };
 
 interface Props {

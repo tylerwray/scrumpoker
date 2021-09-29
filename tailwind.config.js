@@ -5,7 +5,7 @@ module.exports = {
         selected: "0px 0px 0px 3px #48BB78"
       },
       fontSize: {
-        huge: "7rem"
+        huge: "10rem"
       }
     }
   },

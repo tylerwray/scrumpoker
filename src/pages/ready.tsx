@@ -26,7 +26,7 @@ const Ready = ({ location }: PageRendererProps) => {
     <Layout showBack>
       <div
         style={{ height: "70vh" }}
-        className="w-screen flex justify-center items-center"
+        className=" flex justify-center items-center"
       >
         <Card color={color} revealed={cardRevealed} onClick={toggleCard}>
           {location.state?.value}

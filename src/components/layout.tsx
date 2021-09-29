@@ -33,7 +33,7 @@ function Layout({ children, showBack = false }: Props) {
           <IconSettingsGear />
         </Link>
       </nav>
-      <main className="bg-gray-900">{children}</main>
+      <main>{children}</main>
     </>
   );
 }
