@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { navigate, PageRendererProps } from "gatsby";
+import { navigate, PageProps } from "gatsby";
 
 import Card from "../components/card";
 import Layout from "../components/layout";
 import useCardColor from "../hooks/useCardColor";
 
-const Ready = ({ location }: PageRendererProps) => {
+const Ready = ({ location }: PageProps) => {
   const [color] = useCardColor();
   const [cardRevealed, setCardRevealed] = useState(false);
 
