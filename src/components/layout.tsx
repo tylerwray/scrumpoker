@@ -20,6 +20,7 @@ function Layout({ children, showBack = false }: Props) {
         {showBack && (
           <Link
             to="/"
+            aria-label="back"
             className="flex flex-col justify-center items-center h-full p-2 w-24"
           >
             <IconBackArrow />
@@ -28,6 +29,7 @@ function Layout({ children, showBack = false }: Props) {
         <div className="flex-1" />
         <Link
           to="/settings/"
+          aria-label="settings"
           className="flex flex-col justify-center items-center h-full p-2 w-24"
         >
           <IconSettingsGear />
