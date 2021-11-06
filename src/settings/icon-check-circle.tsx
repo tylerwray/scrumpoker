@@ -1,8 +1,8 @@
 import React from "react";
 
-interface Props {
+type Props = {
   fill?: string;
-}
+};
 
 function IconCheckCircle({ fill = "black" }: Props) {
   return (

@@ -1,4 +1,5 @@
 import React, { ReactNode, MouseEvent } from "react";
+import { CardColor } from "../settings";
 import "./card.css";
 
 const BASE =
@@ -6,23 +7,23 @@ const BASE =
 
 const SIZES = {
   sm: "w-16 h-24 text-3xl",
-  lg: "w-80 h-96 text-huge"
+  lg: "w-80 h-96 text-huge",
 };
 
-interface Props {
+type Props = {
   children: ReactNode;
   revealed?: boolean;
   onClick?(event: MouseEvent<HTMLDivElement>): void;
   size?: "sm" | "lg";
-  color?: string;
-}
+  color?: CardColor;
+};
 
 function Card({
   children,
   revealed = true,
   onClick,
   size = "lg",
-  color
+  color,
 }: Props) {
   const isFlipped = revealed ? "is-flipped" : "";
 

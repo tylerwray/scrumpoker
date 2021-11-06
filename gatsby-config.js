@@ -22,6 +22,6 @@ module.exports = {
         icon: "src/images/poker.png",
       },
     },
-    "gatsby-plugin-offline"
+    "gatsby-plugin-offline",
   ],
 };

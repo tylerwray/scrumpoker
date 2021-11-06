@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { navigate, PageProps } from "gatsby";
 
-import Card from "../components/card";
-import Layout from "../components/layout";
-import useCardColor from "../hooks/useCardColor";
+import Card from "../card";
+import Layout from "../layout/layout";
+import { useSettings } from "../settings";
 
-type Props = PageProps<object, object, {value: string}>
+type Props = PageProps<object, object, { value: string }>;
 
-const Ready = ({location}: Props) => {
-  const [color] = useCardColor();
+const Ready = ({ location }: Props) => {
+  const { cardColor } = useSettings();
   const [cardRevealed, setCardRevealed] = useState(false);
 
   if (location.state?.value == null) {
@@ -21,16 +21,16 @@ const Ready = ({location}: Props) => {
   }
 
   function toggleCard() {
-    setCardRevealed(v => !v);
+    setCardRevealed((v) => !v);
   }
 
   return (
-    <Layout showBack>
+    <Layout title="Ready" showBack>
       <div
         style={{ height: "70vh" }}
-        className=" flex justify-center items-center"
+        className="flex justify-center items-center"
       >
-        <Card color={color} revealed={cardRevealed} onClick={toggleCard}>
+        <Card color={cardColor} revealed={cardRevealed} onClick={toggleCard}>
           {location.state?.value}
         </Card>
       </div>

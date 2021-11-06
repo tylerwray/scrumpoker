@@ -3,37 +3,40 @@ import React, {
   useState,
   ReactNode,
   useContext,
-  useCallback
+  useCallback,
 } from "react";
-import noop from "../lib/noop";
 import IconCheckCircle from "./icon-check-circle";
 
+function noop(): void {
+  // Does nothing
+}
+
 // --------- Context ----------
-interface Context {
+type Context = {
   value?: string;
   setValue: (value: string) => void;
-}
+};
 
 const SelectContext = React.createContext<Context>({
   value: "",
-  setValue: noop
+  setValue: noop,
 });
 
 SelectContext.displayName = "SelectContext";
 
 // --------- Body ----------
-interface BodyProps {
+type BodyProps = {
   children: ReactNode;
-}
+};
 
 function Body({ children }: BodyProps) {
   return <div className="grid grid-fit-lg">{children}</div>;
 }
 
 // --------- Label ----------
-interface LabelProps {
+type LabelProps = {
   children: ReactNode;
-}
+};
 
 function Label({ children }: LabelProps) {
   return (
@@ -45,12 +48,12 @@ function Label({ children }: LabelProps) {
 }
 
 // --------- Option ----------
-interface OptionProps {
+type OptionProps = {
   children: ReactNode;
   value: string;
-}
+};
 
-function Option({ children, value }: OptionProps): JSX.Element {
+function Option({ children, value }: OptionProps) {
   const { value: selectedValue, setValue } = useContext(SelectContext);
 
   const selected = value === selectedValue;
@@ -75,11 +78,11 @@ function Option({ children, value }: OptionProps): JSX.Element {
 }
 
 // --------- Select ----------
-interface SelectProps {
-  children: ReactNode[];
+type SelectProps = {
+  children: ReactNode;
   initialValue: string;
   onChange(value: string): void;
-}
+};
 
 function Select({ children, initialValue = "", onChange }: SelectProps) {
   const [selectedValue, setSelectedValue] = useState(initialValue);
@@ -95,7 +98,7 @@ function Select({ children, initialValue = "", onChange }: SelectProps) {
   const context = useMemo(
     () => ({
       setValue,
-      value: selectedValue
+      value: selectedValue,
     }),
     [selectedValue, setValue]
   );
@@ -108,11 +111,11 @@ function Select({ children, initialValue = "", onChange }: SelectProps) {
 }
 
 // --------- SelectCompoundComponent ----------
-interface CompoundComponents {
+type CompoundComponents = {
   Body: (props: BodyProps) => JSX.Element;
   Label: (props: LabelProps) => JSX.Element;
   Option: (props: OptionProps) => JSX.Element;
-}
+};
 
 type SelectType = (props: SelectProps) => JSX.Element;
 type SelectCompoundComponent = SelectType & CompoundComponents;

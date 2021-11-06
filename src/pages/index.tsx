@@ -1,34 +1,27 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import Layout from "../components/layout";
-import SEO from "../components/seo";
-import Card from "../components/card";
-import useCardColor from "../hooks/useCardColor";
-import useCardSequence, { sequenceToArray } from "../hooks/useCardSequence";
-import useIDontKnowCard from "../hooks/useIDontKnowCard";
-import useTiredCard from "../hooks/useTiredCard";
+import Layout from "../layout";
+import Card from "../card";
+import { useSettings } from "../settings";
 
 function IndexPage() {
-  const [color] = useCardColor();
-  const [sequence] = useCardSequence();
-  const [iDontKnowCard] = useIDontKnowCard();
-  const [tiredCard] = useTiredCard();
+  const { cardColor, cardSequence, iDontKnowCard, tiredCard, sequenceToArray } =
+    useSettings();
 
   return (
-    <Layout>
-      <SEO title="Home" />
+    <Layout title="Home">
       <div className="grid grid-fit-sm max-w-lg my-0 mx-auto">
-        {sequenceToArray(sequence)
+        {sequenceToArray(cardSequence)
           .concat([iDontKnowCard, tiredCard])
-          .map(value => (
+          .map((value) => (
             <Link
               key={value}
               className="flex justify-center m-4"
               to="/ready/"
               state={{ value }}
             >
-              <Card color={color} size="sm">
+              <Card color={cardColor} size="sm">
                 {value}
               </Card>
             </Link>

@@ -3,15 +3,18 @@ import { Link } from "gatsby";
 
 import IconSettingsGear from "./icon-settings-gear";
 import IconBackArrow from "./icon-back-arrow";
+import SEO from "./seo";
 
-interface Props {
-  children: ReactNode[] | ReactNode;
+type Props = {
+  children: ReactNode;
+  title: string;
   showBack?: boolean;
-}
+};
 
-function Layout({ children, showBack = false }: Props) {
+function Layout({ children, title, showBack = false }: Props) {
   return (
     <>
+      <SEO title={title} />
       <nav
         style={{ height: "10vh" }}
         className="flex justify-end items-center w-full"
