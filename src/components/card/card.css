@@ -1,0 +1,24 @@
+.scene {
+  perspective: 32rem;
+}
+
+.card {
+  transition: transform 750ms;
+  transform-style: preserve-3d;
+}
+
+.card-face {
+  -webkit-user-select: none;
+  -webkit-backface-visibility: hidden;
+  user-select: none;
+  backface-visibility: hidden;
+
+}
+
+.card-back {
+  transform: rotateY( 180deg );
+}
+
+.card.is-flipped {
+  transform: rotateY(180deg);
+}
