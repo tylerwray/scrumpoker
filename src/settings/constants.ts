@@ -7,7 +7,6 @@ export const cardColorDescriptions = {
   [CardColor.Yellow]: "Yellow",
   [CardColor.Green]: "Green",
   [CardColor.Blue]: "Blue",
-  [CardColor.Indigo]: "Indigo",
   [CardColor.Purple]: "Purple",
   [CardColor.Pink]: "Pink",
 };

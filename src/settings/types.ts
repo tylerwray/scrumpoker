@@ -1,13 +1,12 @@
 export enum CardColor {
-  Black = "bg-black",
-  Gray = "bg-gray-800",
-  Red = "bg-red-700",
-  Yellow = "bg-yellow-600",
-  Green = "bg-green-700",
-  Blue = "bg-blue-700",
-  Indigo = "bg-indigo-700",
-  Purple = "bg-purple-700",
-  Pink = "bg-pink-700",
+  Black = "card.black",
+  Gray = "card.gray",
+  Red = "card.red",
+  Yellow = "card.yellow",
+  Green = "card.green",
+  Blue = "card.blue",
+  Purple = "card.purple",
+  Pink = "card.pink",
 }
 
 export enum CardSequence {

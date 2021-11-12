@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, createContext, useMemo, useContext, useState } from "react";
 import { CardColor, CardSequence, IDontKnowCard, TiredCard } from "./types";
 
 type SetterFunc<Value = string> = (newValue: Value) => void;
@@ -24,6 +24,7 @@ function useLocalStorage<T = string>(
       const storageValue = value as unknown as string;
       window.localStorage.setItem(key, storageValue);
     } catch (error) {
+      console.error("error?", error);
       // Supress window is not defined error
     }
   }
@@ -31,19 +32,29 @@ function useLocalStorage<T = string>(
   return [storedValue, setValue];
 }
 
-type SettingsHook = {
+type Settings = {
+  cards: string[];
   cardColor: CardColor;
-  setCardColor: SetterFunc<CardColor>;
   cardSequence: CardSequence;
-  setCardSequence: SetterFunc<CardSequence>;
   iDontKnowCard: IDontKnowCard;
-  setIDontKnowCard: SetterFunc<IDontKnowCard>;
   tiredCard: TiredCard;
+  setCardColor: SetterFunc<CardColor>;
+  setCardSequence: SetterFunc<CardSequence>;
+  setIDontKnowCard: SetterFunc<IDontKnowCard>;
   setTiredCard: SetterFunc<TiredCard>;
-  sequenceToArray;
 };
 
-export function useSettings(): SettingsHook {
+function sequenceToArray(sequence: CardSequence) {
+  return sequence.split(", ");
+}
+
+const SettingsContext = createContext<Settings | undefined>(undefined);
+
+type SettingsProviderProps = {
+  children: ReactNode;
+};
+
+function SettingsProvider({ children }: SettingsProviderProps) {
   const [cardColor, setCardColor] = useLocalStorage<CardColor>(
     "scrumpoker-card-color",
     CardColor.Red
@@ -64,19 +75,53 @@ export function useSettings(): SettingsHook {
     TiredCard.Coffee
   );
 
-  function sequenceToArray(sequence: CardSequence) {
-    return sequence.split(", ");
+  const cards = sequenceToArray(cardSequence).concat([
+    iDontKnowCard,
+    tiredCard,
+  ]);
+
+  const value = useMemo<Settings>(
+    () => ({
+      cards,
+      cardColor,
+      setCardColor,
+      cardSequence,
+      setCardSequence,
+      iDontKnowCard,
+      setIDontKnowCard,
+      tiredCard,
+      setTiredCard,
+      sequenceToArray,
+    }),
+    [
+      cards,
+      cardColor,
+      setCardColor,
+      cardSequence,
+      setCardSequence,
+      iDontKnowCard,
+      setIDontKnowCard,
+      tiredCard,
+      setTiredCard,
+      sequenceToArray,
+    ]
+  );
+
+  return (
+    <SettingsContext.Provider value={value}>
+      {children}
+    </SettingsContext.Provider>
+  );
+}
+
+function useSettings(): Settings {
+  const settings = useContext(SettingsContext);
+
+  if (settings === undefined) {
+    throw new Error("useSettings must be used with a <SettingsProvider />");
   }
 
-  return {
-    cardColor,
-    setCardColor,
-    cardSequence,
-    setCardSequence,
-    iDontKnowCard,
-    setIDontKnowCard,
-    tiredCard,
-    setTiredCard,
-    sequenceToArray,
-  };
+  return settings;
 }
+
+export { SettingsProvider, useSettings };

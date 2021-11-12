@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { navigate, PageProps } from "gatsby";
 
-import Card from "../card";
+import { Card } from "../card";
 import Layout from "../layout/layout";
-import { useSettings } from "../settings";
+import { Box } from "@chakra-ui/react";
 
 type Props = PageProps<object, object, { value: string }>;
 
 const Ready = ({ location }: Props) => {
-  const { cardColor } = useSettings();
   const [cardRevealed, setCardRevealed] = useState(false);
 
   if (location.state?.value == null) {
@@ -25,15 +24,12 @@ const Ready = ({ location }: Props) => {
   }
 
   return (
-    <Layout title="Ready" showBack>
-      <div
-        style={{ height: "70vh" }}
-        className="flex justify-center items-center"
-      >
-        <Card color={cardColor} revealed={cardRevealed} onClick={toggleCard}>
+    <Layout showBack title="Ready">
+      <Box pt="20">
+        <Card revealed={cardRevealed} onClick={toggleCard}>
           {location.state?.value}
         </Card>
-      </div>
+      </Box>
     </Layout>
   );
 };

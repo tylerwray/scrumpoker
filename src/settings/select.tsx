@@ -4,6 +4,7 @@ import React, {
   ReactNode,
   useContext,
   useCallback,
+  ReactElement,
 } from "react";
 import IconCheckCircle from "./icon-check-circle";
 
@@ -112,9 +113,9 @@ function Select({ children, initialValue = "", onChange }: SelectProps) {
 
 // --------- SelectCompoundComponent ----------
 type CompoundComponents = {
-  Body: (props: BodyProps) => JSX.Element;
-  Label: (props: LabelProps) => JSX.Element;
-  Option: (props: OptionProps) => JSX.Element;
+  Body: (props: BodyProps) => ReactElement;
+  Label: (props: LabelProps) => ReactElement;
+  Option: (props: OptionProps) => ReactElement;
 };
 
 type SelectType = (props: SelectProps) => JSX.Element;
