@@ -11,7 +11,7 @@ import {
   useDisclosure,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { Card } from "../card";
+import { Card } from "../poker";
 import {
   useSettings,
   CardSequence,

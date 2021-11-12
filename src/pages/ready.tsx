@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { navigate, PageProps } from "gatsby";
 
-import { Card } from "../card";
+import { Card } from "../poker";
 import Layout from "../layout/layout";
 import { Box } from "@chakra-ui/react";
 

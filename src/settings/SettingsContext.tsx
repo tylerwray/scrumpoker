@@ -1,3 +1,4 @@
+import React from "react";
 import { ReactNode, createContext, useMemo, useContext, useState } from "react";
 import { CardColor, CardSequence, IDontKnowCard, TiredCard } from "./types";
 

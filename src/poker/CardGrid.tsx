@@ -1,3 +1,4 @@
+import React from "react";
 import { useSettings } from "../settings";
 import { Link } from "gatsby";
 import { Center, Grid } from "@chakra-ui/react";

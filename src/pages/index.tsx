@@ -1,12 +1,9 @@
 import React from "react";
 
 import Layout from "../layout";
-import { CardGrid } from "../card";
-import { useSettings } from "../settings";
+import { CardGrid } from "../poker";
 
 function IndexPage() {
-  const { cardColor, cards } = useSettings();
-
   return (
     <Layout title="Home">
       <CardGrid />
