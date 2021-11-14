@@ -34,8 +34,8 @@ export const cardColorBackgrounds: CardColorBackgrounds = {
     [CardColor.Purple]: { front: "purple.500", back: "purple.500" },
     [CardColor.Pink]: { front: "pink.300", back: "pink.300" },
     [CardColor.Gradient]: {
-      front: "linear(to-r, green.200, pink.500)",
-      back: "linear(to-l, green.200, pink.500)",
+      front: "radial(green.500, pink.300)",
+      back: "radial(green.500, pink.300)",
     },
   },
 };
