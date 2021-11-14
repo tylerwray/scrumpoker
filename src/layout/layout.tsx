@@ -22,6 +22,7 @@ type Props = {
 
 const ICON_SIZE = 7;
 
+// THOUGHT: Should layout be put in WrapRootElement?
 function Layout({ children, title, showBack = false }: Props) {
   const { toggleColorMode } = useColorMode();
   const ColorModeIcon = useColorModeValue(MoonIcon, SunIcon);

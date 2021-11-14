@@ -9,6 +9,7 @@ import {
   ModalBody,
   ModalCloseButton,
   IconButton,
+  useColorMode,
   useDisclosure,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -23,6 +24,7 @@ import {
   iDontKnowCardDescriptions,
   TiredCard,
   tiredCardDescriptions,
+  cardColorBackgrounds,
 } from ".";
 
 import { SettingsIcon } from "@chakra-ui/icons";
@@ -49,6 +51,7 @@ export function SettingsButton() {
     setCardColor,
   } = useSettings();
 
+  const { colorMode } = useColorMode();
   // TODO: Get dark/light mode working then we can show a nice update toast when we ship the udpate.
   // const toast = useToast();
   // const key = true; // localStorage.getItem("info-toast-dismissed");
@@ -82,6 +85,8 @@ export function SettingsButton() {
   //   }
   // }, [key]);
 
+  const cardColorOptions = cardColorBackgrounds[colorMode];
+
   return (
     <>
       <IconButton
@@ -103,14 +108,20 @@ export function SettingsButton() {
 
             <RadioGroup<CardColor>
               name="card-color"
-              options={Object.values(CardColor)}
+              options={Object.keys(cardColorOptions)}
               defaultValue={cardColor}
               onChange={setCardColor}
               label="Card color"
             >
               {(color) => (
                 <Flex direction="column" justify="center" align="center">
-                  <Box bg={color} w="12" h="12" borderRadius="lg" />
+                  <Box
+                    bgGradient={cardColorOptions[color].front}
+                    bg={cardColorOptions[color].front}
+                    w="12"
+                    h="12"
+                    borderRadius="lg"
+                  />
                   <Box>{cardColorDescriptions[color]}</Box>
                 </Flex>
               )}
