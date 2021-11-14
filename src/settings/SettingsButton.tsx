@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -22,10 +23,10 @@ import {
   iDontKnowCardDescriptions,
   TiredCard,
   tiredCardDescriptions,
-  Select,
 } from ".";
 
 import { SettingsIcon } from "@chakra-ui/icons";
+import { RadioGroup } from "./RadioGroup";
 
 export function SettingsButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -96,67 +97,73 @@ export function SettingsButton() {
           <ModalHeader>Settings</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <div className="flex justify-center my-12">
+            <Flex justify="center" my="12">
               <Card size="sm">144</Card>
-            </div>
+            </Flex>
 
-            <Select initialValue={cardColor} onChange={setCardColor}>
-              <Select.Label>Color</Select.Label>
-              <Select.Body>
-                {Object.values(CardColor).map((key) => (
-                  <Select.Option value={key} key={key}>
-                    <div className="flex flex-col justify-center items-center px-8 py-6 text-center px-8 py-6">
-                      <Box bg={key} className={`rounded-lg h-12 w-12`} />
-                      <div className="mt-3">{cardColorDescriptions[key]}</div>
-                    </div>
-                  </Select.Option>
-                ))}
-              </Select.Body>
-            </Select>
+            <RadioGroup<CardColor>
+              name="card-color"
+              options={Object.values(CardColor)}
+              defaultValue={cardColor}
+              onChange={setCardColor}
+              label="Card color"
+            >
+              {(color) => (
+                <Flex direction="column" justify="center" align="center">
+                  <Box bg={color} w="12" h="12" borderRadius="lg" />
+                  <Box>{cardColorDescriptions[color]}</Box>
+                </Flex>
+              )}
+            </RadioGroup>
 
-            <Select initialValue={cardSequence} onChange={setCardSequence}>
-              <Select.Label>Card Sequence</Select.Label>
-              <Select.Body>
-                {Object.values(CardSequence).map((key) => (
-                  <Select.Option value={key} key={key}>
-                    <div className="p-6">
-                      <h4>{cardSequenceDescriptions[key]}</h4>
-                      <span>{key}</span>
-                    </div>
-                  </Select.Option>
-                ))}
-              </Select.Body>
-            </Select>
+            <RadioGroup<CardSequence>
+              name="card-sequence"
+              options={Object.values(CardSequence)}
+              defaultValue={cardSequence}
+              onChange={setCardSequence}
+              label="Card sequence"
+            >
+              {(sequence) => (
+                <Flex direction="column" justify="center" align="center">
+                  <Box>{cardSequenceDescriptions[sequence]}</Box>
+                  <Box>{sequence}</Box>
+                </Flex>
+              )}
+            </RadioGroup>
 
-            <Select initialValue={iDontKnowCard} onChange={setIDontKnowCard}>
-              <Select.Label>I don&apos;t know card</Select.Label>
-              <Select.Body>
-                {Object.values(IDontKnowCard).map((key) => (
-                  <Select.Option value={key} key={key}>
-                    <div className="flex flex-col justify-center items-center px-8 py-6 text-center px-8 py-6">
-                      <div className="text-4xl">{key}</div>
-                      <div className="mt-3">
-                        {iDontKnowCardDescriptions[key]}
-                      </div>
-                    </div>
-                  </Select.Option>
-                ))}
-              </Select.Body>
-            </Select>
+            <RadioGroup<IDontKnowCard>
+              name="i-dont-know-card"
+              options={Object.values(IDontKnowCard)}
+              defaultValue={iDontKnowCard}
+              onChange={setIDontKnowCard}
+              label="I don't know card"
+            >
+              {(idkCard) => (
+                <Flex direction="column" justify="center" align="center">
+                  <Box fontSize="4xl">{idkCard}</Box>
+                  <Box textAlign="center">
+                    {iDontKnowCardDescriptions[idkCard]}
+                  </Box>
+                </Flex>
+              )}
+            </RadioGroup>
 
-            <Select initialValue={tiredCard} onChange={setTiredCard}>
-              <Select.Label>Tired card</Select.Label>
-              <Select.Body>
-                {Object.values(TiredCard).map((key) => (
-                  <Select.Option value={key} key={key}>
-                    <div className="flex flex-col justify-center items-center px-8 py-6 text-center px-8 py-6">
-                      <div className="text-4xl">{key}</div>
-                      <div className="mt-3">{tiredCardDescriptions[key]}</div>
-                    </div>
-                  </Select.Option>
-                ))}
-              </Select.Body>
-            </Select>
+            <RadioGroup<TiredCard>
+              name="tired-card"
+              options={Object.values(TiredCard)}
+              defaultValue={tiredCard}
+              onChange={setTiredCard}
+              label="Tired card"
+            >
+              {(tiredCard) => (
+                <Flex direction="column" justify="center" align="center">
+                  <Box fontSize="4xl">{tiredCard}</Box>
+                  <Box textAlign="center">
+                    {tiredCardDescriptions[tiredCard]}
+                  </Box>
+                </Flex>
+              )}
+            </RadioGroup>
           </ModalBody>
         </ModalContent>
       </Modal>

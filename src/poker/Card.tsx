@@ -5,11 +5,6 @@ import "./card.css";
 
 const noop = () => null;
 
-const SIZES = {
-  sm: "w-16 h-24 text-3xl",
-  lg: "w-80 h-96 text-huge",
-};
-
 type BaseProps = {
   children?: ReactNode;
   onClick(): void;
@@ -25,7 +20,7 @@ function Base(props: BaseProps) {
       position="absolute"
       w="full"
       h="full"
-      border="2px"
+      color="white"
       borderRadius="8"
       cursor="pointer"
       bgGradient={props.bg}
@@ -36,24 +31,46 @@ function Base(props: BaseProps) {
 
 type CardProps = {
   children: ReactNode;
-  revealed?: boolean;
+  isFlipped?: boolean;
   onClick?(): void;
   size?: "sm" | "lg";
 };
 
 export function Card(props: CardProps) {
-  const { children, revealed = true, onClick = noop, size = "lg" } = props;
+  const { children, isFlipped = true, onClick = noop, size = "lg" } = props;
   const { cardColor } = useSettings();
-  const isFlipped = revealed ? "is-flipped" : "";
 
   return (
     <Box className="scene">
-      <Box className={`card ${SIZES[size]} ${isFlipped}`}>
+      <SizedCard size={size} isFlipped={isFlipped} className="card">
         <Base onClick={onClick} bg={cardColor} className="card-face" />
         <Base onClick={onClick} bg={cardColor} className="card-face card-back">
           {children}
         </Base>
-      </Box>
+      </SizedCard>
+    </Box>
+  );
+}
+
+type SizedCardProps = {
+  size: "sm" | "lg";
+  className: string;
+  isFlipped: boolean;
+  children: ReactNode;
+};
+
+const SIZES = {
+  sm: { w: 16, h: 24, fontSize: "3xl" },
+  lg: { w: 80, h: 96, fontSize: "huge" },
+};
+
+function SizedCard({ size, className, isFlipped, children }: SizedCardProps) {
+  return (
+    <Box
+      className={`${className} ${isFlipped ? "is-flipped" : ""}`}
+      {...SIZES[size]}
+    >
+      {children}
     </Box>
   );
 }

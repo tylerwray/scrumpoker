@@ -8,7 +8,7 @@ import { Box } from "@chakra-ui/react";
 type Props = PageProps<object, object, { value: string }>;
 
 const Ready = ({ location }: Props) => {
-  const [cardRevealed, setCardRevealed] = useState(false);
+  const [cardIsFlipped, setCardIsFlipped] = useState(false);
 
   if (location.state?.value == null) {
     try {
@@ -20,13 +20,13 @@ const Ready = ({ location }: Props) => {
   }
 
   function toggleCard() {
-    setCardRevealed((v) => !v);
+    setCardIsFlipped((v) => !v);
   }
 
   return (
     <Layout showBack title="Ready">
       <Box pt="20">
-        <Card revealed={cardRevealed} onClick={toggleCard}>
+        <Card isFlipped={cardIsFlipped} onClick={toggleCard}>
           {location.state?.value}
         </Card>
       </Box>
