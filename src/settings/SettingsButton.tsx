@@ -41,14 +41,14 @@ export function SettingsButton() {
   });
 
   const {
-    tiredCard,
-    setTiredCard,
-    iDontKnowCard,
-    setIDontKnowCard,
-    cardSequence,
-    setCardSequence,
     cardColor,
+    cardSequence,
+    iDontKnowCard,
+    tiredCard,
     setCardColor,
+    setCardSequence,
+    setIDontKnowCard,
+    setTiredCard,
   } = useSettings();
 
   const { colorMode } = useColorMode();
@@ -136,8 +136,8 @@ export function SettingsButton() {
             >
               {(sequence) => (
                 <Flex direction="column" justify="center" align="center">
+                  <Box mb="2">{sequence}</Box>
                   <Box>{cardSequenceDescriptions[sequence]}</Box>
-                  <Box>{sequence}</Box>
                 </Flex>
               )}
             </RadioGroup>
