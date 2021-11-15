@@ -1,4 +1,4 @@
 export * from "./constants";
 export * from "./types";
-export { useSettings } from "./useSettings";
-export { default as Select } from "./select";
+export { SettingsProvider, useSettings } from "./SettingsContext";
+export { SettingsButton } from "./SettingsButton";

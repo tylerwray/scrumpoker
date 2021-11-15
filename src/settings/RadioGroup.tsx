@@ -1,0 +1,92 @@
+import React, { ReactElement } from "react";
+import {
+  Heading,
+  useRadioGroup,
+  useColorModeValue,
+  useRadio,
+  Grid,
+  Box,
+} from "@chakra-ui/react";
+
+type Props<T> = {
+  options: string[];
+  name: string;
+  defaultValue: string;
+  label: string;
+  onChange: (nextValue: T) => void;
+  children: (value: T) => ReactElement;
+};
+
+export function RadioGroup<T = string>({
+  name,
+  defaultValue,
+  label,
+  options,
+  onChange,
+  children,
+}: Props<T>) {
+  function handleChange(newValue: string) {
+    onChange(newValue as unknown as T);
+  }
+
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name,
+    defaultValue,
+    onChange: handleChange,
+  });
+
+  const group = getRootProps();
+
+  return (
+    <>
+      <Heading as="h2" size="md" mb="4">
+        {label}
+      </Heading>
+
+      <Grid
+        templateColumns="repeat(auto-fit, minmax(100px, 1fr))"
+        gap="4"
+        mb="12"
+        {...group}
+      >
+        {options.map((value) => {
+          const radioProps = getRadioProps({ value });
+          return (
+            <Radio {...radioProps}>{children(value as unknown as T)}</Radio>
+          );
+        })}
+      </Grid>
+    </>
+  );
+}
+
+function Radio(props) {
+  const { getInputProps, getCheckboxProps } = useRadio(props);
+
+  const input = getInputProps();
+  const checkbox = getCheckboxProps();
+
+  const background = useColorModeValue("gray.200", "gray.800");
+
+  return (
+    <Box as="label">
+      <input {...input} />
+      <Box
+        {...checkbox}
+        cursor="pointer"
+        borderRadius="md"
+        bg={background}
+        _checked={{
+          boxShadow: "greenOutline",
+        }}
+        _hover={{
+          boxShadow: "greenOutline",
+        }}
+        px={5}
+        py={3}
+      >
+        {props.children}
+      </Box>
+    </Box>
+  );
+}

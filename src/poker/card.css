@@ -12,11 +12,10 @@
   -webkit-backface-visibility: hidden;
   user-select: none;
   backface-visibility: hidden;
-
 }
 
-.card-back {
-  transform: rotateY( 180deg );
+.card-front {
+  transform: rotateY(180deg);
 }
 
 .card.is-flipped {

@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { navigate, PageProps } from "gatsby";
 
-import Card from "../card";
+import { Card } from "../poker";
 import Layout from "../layout/layout";
-import { useSettings } from "../settings";
+import { Box } from "@chakra-ui/react";
 
 type Props = PageProps<object, object, { value: string }>;
 
 const Ready = ({ location }: Props) => {
-  const { cardColor } = useSettings();
-  const [cardRevealed, setCardRevealed] = useState(false);
+  const [cardIsFlipped, setCardIsFlipped] = useState(false);
 
   if (location.state?.value == null) {
     try {
@@ -21,19 +20,16 @@ const Ready = ({ location }: Props) => {
   }
 
   function toggleCard() {
-    setCardRevealed((v) => !v);
+    setCardIsFlipped((v) => !v);
   }
 
   return (
-    <Layout title="Ready" showBack>
-      <div
-        style={{ height: "70vh" }}
-        className="flex justify-center items-center"
-      >
-        <Card color={cardColor} revealed={cardRevealed} onClick={toggleCard}>
+    <Layout showBack title="Ready">
+      <Box pt="20">
+        <Card isFlipped={cardIsFlipped} onClick={toggleCard}>
           {location.state?.value}
         </Card>
-      </div>
+      </Box>
     </Layout>
   );
 };
