@@ -1,11 +1,16 @@
 import { CardColor, CardSequence, IDontKnowCard, TiredCard } from "./types";
 
+export type CardColorMix = {
+  front: string;
+  back: string;
+};
+
 type CardColorBackgrounds = {
   dark: {
-    [key in CardColor]: { front: string; back: string };
+    [key in CardColor]: CardColorMix;
   };
   light: {
-    [key in CardColor]: { front: string; back: string };
+    [key in CardColor]: CardColorMix;
   };
 };
 

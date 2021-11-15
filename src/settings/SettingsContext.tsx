@@ -1,6 +1,8 @@
 import React from "react";
 import { ReactNode, createContext, useMemo, useContext, useState } from "react";
+import { useColorMode } from "@chakra-ui/react";
 import { CardColor, CardSequence, IDontKnowCard, TiredCard } from "./types";
+import { CardColorMix, cardColorBackgrounds } from "./constants";
 
 type SetterFunc<Value = string> = (newValue: Value) => void;
 
@@ -35,7 +37,7 @@ function useLocalStorage<T = string>(
 
 type Settings = {
   cards: string[];
-  cardColor: CardColor;
+  cardColor: CardColorMix;
   cardSequence: CardSequence;
   iDontKnowCard: IDontKnowCard;
   tiredCard: TiredCard;
@@ -81,10 +83,16 @@ function SettingsProvider({ children }: SettingsProviderProps) {
     tiredCard,
   ]);
 
+  const { colorMode } = useColorMode();
+
+  const colorModeColor =
+    cardColorBackgrounds[colorMode][cardColor] ||
+    cardColorBackgrounds[colorMode][CardColor.Red];
+
   const value = useMemo<Settings>(
     () => ({
       cards,
-      cardColor,
+      cardColor: colorModeColor,
       setCardColor,
       cardSequence,
       setCardSequence,
@@ -96,7 +104,7 @@ function SettingsProvider({ children }: SettingsProviderProps) {
     }),
     [
       cards,
-      cardColor,
+      colorModeColor,
       setCardColor,
       cardSequence,
       setCardSequence,

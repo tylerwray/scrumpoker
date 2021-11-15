@@ -109,7 +109,7 @@ export function SettingsButton() {
             <RadioGroup<CardColor>
               name="card-color"
               options={Object.keys(cardColorOptions)}
-              defaultValue={cardColor}
+              defaultValue={cardColor.front}
               onChange={setCardColor}
               label="Card color"
             >
