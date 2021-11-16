@@ -11,7 +11,7 @@ import {
 type Props = {
   options: string[];
   name: string;
-  defaultValue: string;
+  value: string;
   label: string;
   onChange: (nextValue: string) => void;
   children: (value: string) => ReactElement;
@@ -19,7 +19,7 @@ type Props = {
 
 export function RadioGroup({
   name,
-  defaultValue,
+  value,
   label,
   options,
   onChange,
@@ -27,7 +27,7 @@ export function RadioGroup({
 }: Props) {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name,
-    defaultValue,
+    value,
     onChange,
   });
 

@@ -11,12 +11,6 @@ const toHash = (prev, curr) => {
 };
 
 export const presetCardColors: CardColor[] = [
-  { slug: "red", name: "Red", front: "red.500", back: "red.500" },
-  { slug: "yellow", name: "Yellow", front: "yellow.400", back: "yellow.400" },
-  { slug: "green", name: "Green", front: "green.500", back: "green.500" },
-  { slug: "blue", name: "Blue", front: "blue.500", back: "blue.500" },
-  { slug: "purple", name: "Purple", front: "purple.500", back: "purple.500" },
-  { slug: "purple", name: "Pink", front: "pink.300", back: "pink.300" },
   {
     slug: "pink_purple_fade",
     name: "Pink-Purple",
@@ -26,26 +20,26 @@ export const presetCardColors: CardColor[] = [
   {
     slug: "orange-blue-circle",
     name: "Orange-Blue",
-    front: "radial(orange.700, blue.600)",
-    back: "radial(orange.700, blue.600)",
+    front: "radial(orange.700, blue.400)",
+    back: "radial(orange.700, blue.400)",
   },
   {
     slug: "orange-purple-fade",
     name: "Orange-Purple",
-    front: "linear(to-b, orange.100, purple.300)",
-    back: "linear(to-b, orange.100, purple.300)",
+    front: "linear(to-b, orange.300, purple.400)",
+    back: "linear(to-b, orange.300, purple.400)",
   },
   {
     slug: "yellow-red-fade",
     name: "Yellow-Red",
-    front: "linear(to-r, yellow.600, red.700)",
-    back: "linear(to-l, yellow.600, red.700)",
+    front: "linear(to-r, yellow.500, red.600)",
+    back: "linear(to-l, yellow.500, red.600)",
   },
   {
     slug: "teal-yellow-fade",
     name: "Teal-Yellow",
-    front: "linear(to-tr, teal.300, yellow.400)",
-    back: "linear(to-tl, teal.300, yellow.400)",
+    front: "linear(to-tr, teal.400, yellow.400)",
+    back: "linear(to-tl, teal.400, yellow.400)",
   },
   {
     slug: "red-green-fade",

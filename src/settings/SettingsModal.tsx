@@ -11,12 +11,13 @@ import {
   useBreakpointValue,
   Center,
 } from "@chakra-ui/react";
-import { HexColorPicker } from "react-colorful";
+import { RgbaStringColorPicker } from "react-colorful";
 import { Card } from "../poker";
 import { presetCardColors, presetCardSequences } from "./constants";
 import { useSettings } from "./SettingsContext";
 
 import { RadioGroup } from "./RadioGroup";
+import { presetCardColorsHash, presetCardSequencesHash } from ".";
 
 type Props = {
   isOpen: boolean;
@@ -43,10 +44,10 @@ export function SettingsModal({ isOpen, onClose }: Props) {
     setTiredCard,
   } = useSettings();
 
-  const cardColorOptions = Object.keys(presetCardColors);
+  const cardColorOptions = presetCardColors.map((x) => x.slug);
 
   function handleCardColorChange(slug: string) {
-    const cardColor = presetCardColors[slug];
+    const cardColor = presetCardColorsHash[slug];
     setCardColor(cardColor);
   }
 
@@ -54,10 +55,10 @@ export function SettingsModal({ isOpen, onClose }: Props) {
     setCardColor({ front: value, back: value, name: "Custom", slug: "custom" });
   }
 
-  const cardSequenceOptions = Object.keys(presetCardSequences);
+  const cardSequenceOptions = presetCardSequences.map((x) => x.slug);
 
   function handleSetCardSequence(slug: string) {
-    const cardSequence = presetCardSequences[slug];
+    const cardSequence = presetCardSequencesHash[slug];
     setCardSequence(cardSequence);
   }
 
@@ -75,12 +76,12 @@ export function SettingsModal({ isOpen, onClose }: Props) {
           <RadioGroup
             name="card-color"
             options={cardColorOptions}
-            defaultValue={cardColor.slug}
+            value={cardColor.slug}
             onChange={handleCardColorChange}
             label="Card color"
           >
             {(slug) => {
-              const colorMix = presetCardColors[slug];
+              const colorMix = presetCardColorsHash[slug];
 
               return (
                 <Flex direction="column" justify="center" align="center">
@@ -97,22 +98,23 @@ export function SettingsModal({ isOpen, onClose }: Props) {
             }}
           </RadioGroup>
 
-          <Center mb="12">
-            <HexColorPicker
+          <Box mb="12" w="full">
+            <RgbaStringColorPicker
+              style={{ width: "auto" }}
               color={cardColor.front}
               onChange={handleCardColorHexChange}
             />
-          </Center>
+          </Box>
 
           <RadioGroup
             name="card-sequence"
             options={cardSequenceOptions}
-            defaultValue={cardSequence.slug}
+            value={cardSequence.slug}
             onChange={handleSetCardSequence}
             label="Card sequence"
           >
             {(slug) => {
-              const sequence = presetCardSequences[slug];
+              const sequence = presetCardSequencesHash[slug];
 
               return (
                 <Flex direction="column" justify="center" align="center">
@@ -126,7 +128,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
           <RadioGroup
             name="i-dont-know-card"
             options={["🤷‍♀️", "🤷🏻‍♂️", "🤔"]}
-            defaultValue={iDontKnowCard}
+            value={iDontKnowCard}
             onChange={setIDontKnowCard}
             label="I don't know card"
           >
@@ -140,7 +142,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
           <RadioGroup
             name="tired-card"
             options={["🥱", "☕️", "😴"]}
-            defaultValue={tiredCard}
+            value={tiredCard}
             onChange={setTiredCard}
             label="Tired card"
           >
