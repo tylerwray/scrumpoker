@@ -8,31 +8,27 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-type Props<T> = {
+type Props = {
   options: string[];
   name: string;
-  defaultValue: string;
+  value: string;
   label: string;
-  onChange: (nextValue: T) => void;
-  children: (value: T) => ReactElement;
+  onChange: (nextValue: string) => void;
+  children: (value: string) => ReactElement;
 };
 
-export function RadioGroup<T = string>({
+export function RadioGroup({
   name,
-  defaultValue,
+  value,
   label,
   options,
   onChange,
   children,
-}: Props<T>) {
-  function handleChange(newValue: string) {
-    onChange(newValue as unknown as T);
-  }
-
+}: Props) {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name,
-    defaultValue,
-    onChange: handleChange,
+    value,
+    onChange,
   });
 
   const group = getRootProps();
@@ -52,7 +48,9 @@ export function RadioGroup<T = string>({
         {options.map((value) => {
           const radioProps = getRadioProps({ value });
           return (
-            <Radio {...radioProps}>{children(value as unknown as T)}</Radio>
+            <Radio key={value} {...radioProps}>
+              {children(value)}
+            </Radio>
           );
         })}
       </Grid>

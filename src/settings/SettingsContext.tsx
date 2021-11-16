@@ -1,31 +1,36 @@
 import React from "react";
 import { ReactNode, createContext, useMemo, useContext, useState } from "react";
-import { useColorMode } from "@chakra-ui/react";
-import { CardColor, CardSequence, IDontKnowCard, TiredCard } from "./types";
-import { CardColorMix, cardColorBackgrounds } from "./constants";
+import {
+  CardColor,
+  CardSequence,
+  presetCardColors,
+  presetCardSequences,
+} from "./constants";
 
 type SetterFunc<Value = string> = (newValue: Value) => void;
 
-function useLocalStorage<T = string>(
-  key: string,
-  initialValue: T
-): [T, SetterFunc<T>] {
+type LocalStorageArgs<T> = {
+  key: string;
+  defaultValue?: T;
+};
+
+function useLocalStorage<T = string>({
+  key,
+  defaultValue,
+}: LocalStorageArgs<T>): [T, SetterFunc<T>] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
-      const item = window.localStorage.getItem(key);
-      const storageValue = item as unknown as T;
-
-      return storageValue ? storageValue : initialValue;
+      const storageValue = window.localStorage.getItem(key);
+      return storageValue ? JSON.parse(storageValue) : defaultValue;
     } catch (error) {
-      return initialValue;
+      return defaultValue;
     }
   });
 
   function setValue(value: T) {
     try {
       setStoredValue(value);
-      const storageValue = value as unknown as string;
-      window.localStorage.setItem(key, storageValue);
+      window.localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
       console.error("error?", error);
       // Supress window is not defined error
@@ -36,20 +41,16 @@ function useLocalStorage<T = string>(
 }
 
 type Settings = {
-  cards: string[];
-  cardColor: CardColorMix;
+  cardColor: CardColor;
   cardSequence: CardSequence;
-  iDontKnowCard: IDontKnowCard;
-  tiredCard: TiredCard;
+  cards: string[];
+  iDontKnowCard: string;
+  tiredCard: string;
   setCardColor: SetterFunc<CardColor>;
   setCardSequence: SetterFunc<CardSequence>;
-  setIDontKnowCard: SetterFunc<IDontKnowCard>;
-  setTiredCard: SetterFunc<TiredCard>;
+  setIDontKnowCard: SetterFunc<string>;
+  setTiredCard: SetterFunc<string>;
 };
-
-function sequenceToArray(sequence: CardSequence) {
-  return sequence.split(", ");
-}
 
 const SettingsContext = createContext<Settings | undefined>(undefined);
 
@@ -58,61 +59,50 @@ type SettingsProviderProps = {
 };
 
 function SettingsProvider({ children }: SettingsProviderProps) {
-  const [cardColor, setCardColor] = useLocalStorage<CardColor>(
-    "scrumpoker-card-color",
-    CardColor.Red
-  );
+  const [cardColor, setCardColor] = useLocalStorage<CardColor>({
+    key: "scrumpoker-card-color-name",
+    defaultValue: presetCardColors[0],
+  });
 
-  const [cardSequence, setCardSequence] = useLocalStorage<CardSequence>(
-    "scrumpoker-sequence",
-    CardSequence.Fibonacci
-  );
+  const [cardSequence, setCardSequence] = useLocalStorage<CardSequence>({
+    key: "scrumpoker-sequence-name",
+    defaultValue: presetCardSequences[0],
+  });
 
-  const [iDontKnowCard, setIDontKnowCard] = useLocalStorage<IDontKnowCard>(
-    "scrumpoker-i-dont-know-card-value",
-    IDontKnowCard.WomanShrugging
-  );
+  const [iDontKnowCard, setIDontKnowCard] = useLocalStorage({
+    key: "scrumpoker-i-dont-know-card",
+    defaultValue: "🤷‍♀️",
+  });
 
-  const [tiredCard, setTiredCard] = useLocalStorage<TiredCard>(
-    "scrumpoker-tired-card-value",
-    TiredCard.Coffee
-  );
+  const [tiredCard, setTiredCard] = useLocalStorage({
+    key: "scrumpoker-tired-card",
+    defaultValue: "🥱",
+  });
 
-  const cards = sequenceToArray(cardSequence).concat([
-    iDontKnowCard,
-    tiredCard,
-  ]);
-
-  const { colorMode } = useColorMode();
-
-  const colorModeColor =
-    cardColorBackgrounds[colorMode][cardColor] ||
-    cardColorBackgrounds[colorMode][CardColor.Red];
+  const cards = cardSequence.values.concat([iDontKnowCard, tiredCard]);
 
   const value = useMemo<Settings>(
     () => ({
-      cards,
-      cardColor: colorModeColor,
-      setCardColor,
+      cardColor,
       cardSequence,
-      setCardSequence,
+      cards,
       iDontKnowCard,
-      setIDontKnowCard,
       tiredCard,
+      setCardColor,
+      setCardSequence,
+      setIDontKnowCard,
       setTiredCard,
-      sequenceToArray,
     }),
     [
-      cards,
-      colorModeColor,
-      setCardColor,
+      cardColor,
       cardSequence,
-      setCardSequence,
+      cards,
       iDontKnowCard,
-      setIDontKnowCard,
       tiredCard,
+      setCardColor,
+      setCardSequence,
+      setIDontKnowCard,
       setTiredCard,
-      sequenceToArray,
     ]
   );
 

@@ -1,90 +1,76 @@
-import { CardColor, CardSequence, IDontKnowCard, TiredCard } from "./types";
-
-export type CardColorMix = {
+export type CardColor = {
+  slug: string;
+  name: string;
   front: string;
   back: string;
 };
 
-type CardColorBackgrounds = {
-  dark: {
-    [key in CardColor]: CardColorMix;
-  };
-  light: {
-    [key in CardColor]: CardColorMix;
-  };
+const toHash = (prev, curr) => {
+  prev[curr.slug] = curr;
+  return prev;
 };
 
-export const cardColorBackgrounds: CardColorBackgrounds = {
-  dark: {
-    [CardColor.Black]: { front: "black", back: "black" },
-    [CardColor.Gray]: { front: "gray.600", back: "gray.600" },
-    [CardColor.Red]: { front: "red.700", back: "red.700" },
-    [CardColor.Yellow]: { front: "yellow.600", back: "yellow.600" },
-    [CardColor.Green]: { front: "green.700", back: "green.700" },
-    [CardColor.Blue]: { front: "blue.700", back: "blue.700" },
-    [CardColor.Purple]: { front: "purple.700", back: "purple.700" },
-    [CardColor.Pink]: { front: "pink.600", back: "pink.600" },
-    [CardColor.Gradient]: {
-      front: "linear(to-r, pink.600, purple.700)",
-      back: "linear(to-l, pink.600, purple.700)",
-    },
+export const presetCardColors: CardColor[] = [
+  {
+    slug: "pink_purple_fade",
+    name: "Pink-Purple",
+    front: "linear(to-r, pink.600, purple.700)",
+    back: "linear(to-l, pink.600, purple.700)",
   },
-  light: {
-    [CardColor.Black]: { front: "black", back: "black" },
-    [CardColor.Gray]: { front: "gray.600", back: "gray.600" },
-    [CardColor.Red]: { front: "red.500", back: "red.500" },
-    [CardColor.Yellow]: { front: "yellow.400", back: "yellow.400" },
-    [CardColor.Green]: { front: "green.500", back: "green.500" },
-    [CardColor.Blue]: { front: "blue.500", back: "blue.500" },
-    [CardColor.Purple]: { front: "purple.500", back: "purple.500" },
-    [CardColor.Pink]: { front: "pink.300", back: "pink.300" },
-    [CardColor.Gradient]: {
-      front: "radial(green.500, pink.300)",
-      back: "radial(green.500, pink.300)",
-    },
+  {
+    slug: "orange-blue-circle",
+    name: "Orange-Blue",
+    front: "radial(orange.700, blue.400)",
+    back: "radial(orange.700, blue.400)",
   },
-};
+  {
+    slug: "orange-purple-fade",
+    name: "Orange-Purple",
+    front: "linear(to-b, orange.300, purple.400)",
+    back: "linear(to-b, orange.300, purple.400)",
+  },
+  {
+    slug: "yellow-red-fade",
+    name: "Yellow-Red",
+    front: "linear(to-r, yellow.500, red.600)",
+    back: "linear(to-l, yellow.500, red.600)",
+  },
+  {
+    slug: "teal-yellow-fade",
+    name: "Teal-Yellow",
+    front: "linear(to-tr, teal.400, yellow.400)",
+    back: "linear(to-tl, teal.400, yellow.400)",
+  },
+  {
+    slug: "red-green-fade",
+    name: "Red-Green",
+    front: "linear(to-br, red.300, green.400)",
+    back: "linear(to-bl, red.300, green.400)",
+  },
+];
 
-type CardColorMap = {
-  [key in CardColor]: string;
-};
+export const presetCardColorsHash: { [key: string]: CardColor } =
+  presetCardColors.reduce(toHash, {});
 
-export const cardColorDescriptions: CardColorMap = {
-  [CardColor.Black]: "Black",
-  [CardColor.Gray]: "Gray",
-  [CardColor.Red]: "Red",
-  [CardColor.Yellow]: "Yellow",
-  [CardColor.Green]: "Green",
-  [CardColor.Blue]: "Blue",
-  [CardColor.Purple]: "Purple",
-  [CardColor.Pink]: "Pink",
-  [CardColor.Gradient]: "Gradient",
-};
+export type CardSequence = { slug: string; name: string; values: string[] };
 
-type CardSequenceMap = {
-  [key in CardSequence]: string;
-};
+export const presetCardSequences: CardSequence[] = [
+  {
+    name: "Fibonacci",
+    slug: "fibonacci",
+    values: ["1", "2", "3", "5", "8", "13", "21", "34", "89", "144"],
+  },
+  {
+    slug: "t_shirt_size",
+    name: "T-Shirt size",
+    values: ["XS", "SM", "MD", "LG", "XL"],
+  },
+  {
+    slug: "linear",
+    name: "Linear",
+    values: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+  },
+];
 
-export const cardSequenceDescriptions: CardSequenceMap = {
-  [CardSequence.Fibonacci]: "Fibonacci",
-  [CardSequence.TShirtSize]: "T-Shirt Sizes",
-  [CardSequence.Standard]: "Standard",
-};
-
-type IDontKnowCardMap = {
-  [key in IDontKnowCard]: string;
-};
-
-export const iDontKnowCardDescriptions: IDontKnowCardMap = {
-  [IDontKnowCard.WomanShrugging]: "Woman Shrugging",
-  [IDontKnowCard.ManShrugging]: "Man Shrugging",
-};
-
-type TiredCardMap = {
-  [key in TiredCard]: string;
-};
-
-export const tiredCardDescriptions: TiredCardMap = {
-  [TiredCard.Coffee]: "Coffee",
-  [TiredCard.Sleepy]: "Sleepy",
-};
+export const presetCardSequencesHash: { [key: string]: CardSequence } =
+  presetCardSequences.reduce(toHash, {});
