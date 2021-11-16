@@ -5,38 +5,6 @@ import { SettingsModal } from "./SettingsModal";
 
 export function SettingsButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // TODO: Get dark/light mode working then we can show a nice update toast when we ship the udpate.
-  // const toast = useToast();
-  // const key = true; // localStorage.getItem("info-toast-dismissed");
-
-  // useEffect(() => {
-  //   if (!key) {
-  //     setTimeout(
-  //       () =>
-  //         toast({
-  //           isClosable: true,
-  //           title: "Updates",
-  //           onCloseComplete: () => {
-  //             // localStorage.setItem("info-toast-dismissed", "true");
-  //           },
-  //           description: (
-  //             <>
-  //               Check out what's new{" "}
-  //               <Button
-  //                 color="black"
-  //                 variant="link"
-  //                 textDecor="underline"
-  //                 onClick={onOpen}
-  //               >
-  //                 in settings!
-  //               </Button>
-  //             </>
-  //           ),
-  //         }),
-  //       200
-  //     );
-  //   }
-  // }, [key]);
 
   return (
     <>

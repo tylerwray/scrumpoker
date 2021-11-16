@@ -1,6 +1,5 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { ReactNode, createContext, useMemo, useContext, useState } from "react";
-import { useColorMode } from "@chakra-ui/react";
 import {
   CardColor,
   CardSequence,

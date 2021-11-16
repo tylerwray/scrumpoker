@@ -13,7 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { HexColorPicker } from "react-colorful";
 import { Card } from "../poker";
-import { presetCardColors, presetCardSequences, useSettings } from ".";
+import { presetCardColors, presetCardSequences } from "./constants";
+import { useSettings } from "./SettingsContext";
 
 import { RadioGroup } from "./RadioGroup";
 
