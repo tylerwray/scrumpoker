@@ -9,21 +9,23 @@ import {
 } from "@chakra-ui/react";
 
 type Props = {
-  options: string[];
-  name: string;
-  value: string;
-  label: string;
-  onChange: (nextValue: string) => void;
   children: (value: string) => ReactElement;
+  label: string;
+  mb?: string;
+  name: string;
+  onChange: (nextValue: string) => void;
+  options: string[];
+  value: string;
 };
 
 export function RadioGroup({
-  name,
-  value,
-  label,
-  options,
-  onChange,
   children,
+  label,
+  mb = "12",
+  name,
+  onChange,
+  options,
+  value,
 }: Props) {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name,
@@ -42,7 +44,7 @@ export function RadioGroup({
       <Grid
         templateColumns="repeat(auto-fit, minmax(100px, 1fr))"
         gap="4"
-        mb="12"
+        mb={mb}
         {...group}
       >
         {options.map((value) => {
