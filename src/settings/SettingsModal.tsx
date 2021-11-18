@@ -174,7 +174,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
 
           <Flex mb="4" justify="space-evenly" align="center">
             <Card size="sm">{iDontKnowCard}</Card>
-            <Popover placement="top-end">
+            <Popover placement="top-end" isLazy>
               <PopoverTrigger>
                 <Button
                   colorScheme="purple"
@@ -198,7 +198,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
 
           <Flex mb="4" justify="space-evenly" align="center">
             <Card size="sm">{tiredCard}</Card>
-            <Popover placement="top-end">
+            <Popover placement="top-end" isLazy>
               <PopoverTrigger>
                 <Button
                   colorScheme="purple"
