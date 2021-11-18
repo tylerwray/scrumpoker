@@ -19,7 +19,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
-import { RgbaStringColorPicker } from "react-colorful";
 import { Card } from "../poker";
 import {
   presetCardColors,
@@ -28,6 +27,7 @@ import {
   presetCardSequencesHash,
 } from "./constants";
 import { useSettings } from "./SettingsContext";
+import { ColorPicker } from "./ColorPicker";
 
 import { RadioGroup } from "./RadioGroup";
 
@@ -76,7 +76,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
     onCloseCustomColorPicker();
   }
 
-  function handleCardColorHexChange(value: string) {
+  function handleCustomCardColorChange(value: string) {
     setCardColor({ front: value, back: value, name: "Custom", slug: "custom" });
   }
 
@@ -131,7 +131,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
               leftIcon={<EditIcon />}
               onClick={() => {
                 if (!isCustomColor) {
-                  handleCardColorHexChange("rgba(128, 90, 213, 1)");
+                  handleCustomCardColorChange("rgba(128, 90, 213, 1)");
                 }
                 onToggleCustomColorPicker();
               }}
@@ -142,10 +142,9 @@ export function SettingsModal({ isOpen, onClose }: Props) {
 
           <Collapse in={isCustomColorPickerOpen}>
             <Box mb="12" w="full">
-              <RgbaStringColorPicker
-                style={{ width: "auto" }}
-                color={cardColor.front}
-                onChange={handleCardColorHexChange}
+              <ColorPicker
+                onChange={handleCustomCardColorChange}
+                defaultValue={cardColor.front}
               />
             </Box>
           </Collapse>
