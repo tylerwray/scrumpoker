@@ -30,8 +30,8 @@ import {
 import { useSettings } from "./SettingsContext";
 
 import { RadioGroup } from "./RadioGroup";
+
 const EmojiPicker = React.lazy(() => import("./EmojiPicker"));
-// import EmojiPicker from "./EmojiPicker";
 
 type Props = {
   isOpen: boolean;
@@ -178,7 +178,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
 
           <Flex mb="4" justify="space-evenly" align="center">
             <Card size="sm">{iDontKnowCard}</Card>
-            <Popover placement="top-start" isLazy>
+            <Popover placement="top-end" isLazy>
               <PopoverTrigger>
                 <Button
                   colorScheme="purple"
@@ -188,8 +188,8 @@ export function SettingsModal({ isOpen, onClose }: Props) {
                   Edit
                 </Button>
               </PopoverTrigger>
-              <PopoverContent>
-                <Suspense fallback="Loading...">
+              <PopoverContent w="unset">
+                <Suspense fallback="">
                   <EmojiPicker onChange={setIDontKnowCard} />
                 </Suspense>
               </PopoverContent>
@@ -202,23 +202,23 @@ export function SettingsModal({ isOpen, onClose }: Props) {
 
           <Flex mb="4" justify="space-evenly" align="center">
             <Card size="sm">{tiredCard}</Card>
-            <Button
-              colorScheme="purple"
-              variant="outline"
-              leftIcon={<EditIcon />}
-              onClick={onToggleTiredCardPicker}
-            >
-              Edit
-            </Button>
+            <Popover placement="top-end" isLazy>
+              <PopoverTrigger>
+                <Button
+                  colorScheme="purple"
+                  variant="outline"
+                  leftIcon={<EditIcon />}
+                >
+                  Edit
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent w="unset">
+                <Suspense fallback="">
+                  <EmojiPicker onChange={setTiredCard} />
+                </Suspense>
+              </PopoverContent>
+            </Popover>
           </Flex>
-
-          <Collapse in={isTiredCardPickerOpen}>
-            <Center mb="12">
-              <Suspense fallback="Loading...">
-                <EmojiPicker onChange={setTiredCard} />
-              </Suspense>
-            </Center>
-          </Collapse>
         </ModalBody>
       </ModalContent>
     </Modal>
