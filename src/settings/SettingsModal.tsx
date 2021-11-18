@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useCallback } from "react";
 import {
   Box,
   Button,
@@ -76,9 +76,17 @@ export function SettingsModal({ isOpen, onClose }: Props) {
     onCloseCustomColorPicker();
   }
 
-  function handleCustomCardColorChange(value: string) {
-    setCardColor({ front: value, back: value, name: "Custom", slug: "custom" });
-  }
+  const handleCustomCardColorChange = useCallback(
+    (value: string) => {
+      setCardColor({
+        front: value,
+        back: value,
+        name: "Custom",
+        slug: "custom",
+      });
+    },
+    [setCardColor]
+  );
 
   const cardSequenceOptions = presetCardSequences.map((x) => x.slug);
 
