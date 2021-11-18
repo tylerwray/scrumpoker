@@ -1,23 +1,37 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
   Box,
+  Button,
+  Center,
+  Collapse,
   Flex,
+  Heading,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
   useBreakpointValue,
-  Center,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { EditIcon } from "@chakra-ui/icons";
 import { RgbaStringColorPicker } from "react-colorful";
 import { Card } from "../poker";
-import { presetCardColors, presetCardSequences } from "./constants";
+import {
+  presetCardColors,
+  presetCardSequences,
+  presetCardColorsHash,
+  presetCardSequencesHash,
+} from "./constants";
 import { useSettings } from "./SettingsContext";
 
 import { RadioGroup } from "./RadioGroup";
-import { presetCardColorsHash, presetCardSequencesHash } from ".";
+
+const EmojiPicker = React.lazy(() => import("./EmojiPicker"));
 
 type Props = {
   isOpen: boolean;
@@ -44,11 +58,22 @@ export function SettingsModal({ isOpen, onClose }: Props) {
     setTiredCard,
   } = useSettings();
 
+  const isCustomColor = cardColor.slug === "custom";
+
+  const {
+    isOpen: isCustomColorPickerOpen,
+    onClose: onCloseCustomColorPicker,
+    onToggle: onToggleCustomColorPicker,
+  } = useDisclosure({
+    defaultIsOpen: isCustomColor,
+  });
+
   const cardColorOptions = presetCardColors.map((x) => x.slug);
 
   function handleCardColorChange(slug: string) {
     const cardColor = presetCardColorsHash[slug];
     setCardColor(cardColor);
+    onCloseCustomColorPicker();
   }
 
   function handleCardColorHexChange(value: string) {
@@ -68,7 +93,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
       <ModalContent>
         <ModalHeader>Settings</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody paddingInline="4">
           <Flex justify="center" my="12">
             <Card size="sm">144</Card>
           </Flex>
@@ -79,6 +104,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
             value={cardColor.slug}
             onChange={handleCardColorChange}
             label="Card color"
+            mb="4"
           >
             {(slug) => {
               const colorMix = presetCardColorsHash[slug];
@@ -98,13 +124,31 @@ export function SettingsModal({ isOpen, onClose }: Props) {
             }}
           </RadioGroup>
 
-          <Box mb="12" w="full">
-            <RgbaStringColorPicker
-              style={{ width: "auto" }}
-              color={cardColor.front}
-              onChange={handleCardColorHexChange}
-            />
-          </Box>
+          <Center mb="4">
+            <Button
+              colorScheme="purple"
+              variant="outline"
+              leftIcon={<EditIcon />}
+              onClick={() => {
+                if (!isCustomColor) {
+                  handleCardColorHexChange("rgba(128, 90, 213, 1)");
+                }
+                onToggleCustomColorPicker();
+              }}
+            >
+              Custom
+            </Button>
+          </Center>
+
+          <Collapse in={isCustomColorPickerOpen}>
+            <Box mb="12" w="full">
+              <RgbaStringColorPicker
+                style={{ width: "auto" }}
+                color={cardColor.front}
+                onChange={handleCardColorHexChange}
+              />
+            </Box>
+          </Collapse>
 
           <RadioGroup
             name="card-sequence"
@@ -125,33 +169,53 @@ export function SettingsModal({ isOpen, onClose }: Props) {
             }}
           </RadioGroup>
 
-          <RadioGroup
-            name="i-dont-know-card"
-            options={["🤷‍♀️", "🤷🏻‍♂️", "🤔"]}
-            value={iDontKnowCard}
-            onChange={setIDontKnowCard}
-            label="I don't know card"
-          >
-            {(idkCard) => (
-              <Flex direction="column" justify="center" align="center">
-                <Box fontSize="4xl">{idkCard}</Box>
-              </Flex>
-            )}
-          </RadioGroup>
+          <Heading as="h2" size="md" mb="4">
+            I don't know card
+          </Heading>
 
-          <RadioGroup
-            name="tired-card"
-            options={["🥱", "☕️", "😴"]}
-            value={tiredCard}
-            onChange={setTiredCard}
-            label="Tired card"
-          >
-            {(tiredCard) => (
-              <Flex direction="column" justify="center" align="center">
-                <Box fontSize="4xl">{tiredCard}</Box>
-              </Flex>
-            )}
-          </RadioGroup>
+          <Flex mb="4" justify="space-evenly" align="center">
+            <Card size="sm">{iDontKnowCard}</Card>
+            <Popover placement="top-end">
+              <PopoverTrigger>
+                <Button
+                  colorScheme="purple"
+                  variant="outline"
+                  leftIcon={<EditIcon />}
+                >
+                  Edit
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent w="unset">
+                <Suspense fallback="">
+                  <EmojiPicker onChange={setIDontKnowCard} />
+                </Suspense>
+              </PopoverContent>
+            </Popover>
+          </Flex>
+
+          <Heading as="h2" size="md" mb="4">
+            Tired card
+          </Heading>
+
+          <Flex mb="4" justify="space-evenly" align="center">
+            <Card size="sm">{tiredCard}</Card>
+            <Popover placement="top-end">
+              <PopoverTrigger>
+                <Button
+                  colorScheme="purple"
+                  variant="outline"
+                  leftIcon={<EditIcon />}
+                >
+                  Edit
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent w="unset">
+                <Suspense fallback="">
+                  <EmojiPicker onChange={setTiredCard} />
+                </Suspense>
+              </PopoverContent>
+            </Popover>
+          </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>

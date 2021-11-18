@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ReactNode, createContext, useMemo, useContext, useState } from "react";
 import {
   CardColor,
@@ -27,15 +27,18 @@ function useLocalStorage<T = string>({
     }
   });
 
-  function setValue(value: T) {
-    try {
-      setStoredValue(value);
-      window.localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.error("error?", error);
-      // Supress window is not defined error
-    }
-  }
+  const setValue = useCallback(
+    (value: T) => {
+      try {
+        setStoredValue(value);
+        window.localStorage.setItem(key, JSON.stringify(value));
+      } catch (error) {
+        console.error("error?", error);
+        // Supress window is not defined error
+      }
+    },
+    [setStoredValue]
+  );
 
   return [storedValue, setValue];
 }
