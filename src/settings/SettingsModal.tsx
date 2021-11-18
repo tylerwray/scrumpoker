@@ -68,9 +68,6 @@ export function SettingsModal({ isOpen, onClose }: Props) {
     defaultIsOpen: isCustomColor,
   });
 
-  const { isOpen: isTiredCardPickerOpen, onToggle: onToggleTiredCardPicker } =
-    useDisclosure();
-
   const cardColorOptions = presetCardColors.map((x) => x.slug);
 
   function handleCardColorChange(slug: string) {
@@ -133,7 +130,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
               variant="outline"
               leftIcon={<EditIcon />}
               onClick={() => {
-                if (!isCustomColorPickerOpen && !isCustomColor) {
+                if (!isCustomColor) {
                   handleCardColorHexChange("rgba(128, 90, 213, 1)");
                 }
                 onToggleCustomColorPicker();
@@ -178,7 +175,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
 
           <Flex mb="4" justify="space-evenly" align="center">
             <Card size="sm">{iDontKnowCard}</Card>
-            <Popover placement="top-end" isLazy>
+            <Popover placement="top-end">
               <PopoverTrigger>
                 <Button
                   colorScheme="purple"
@@ -202,7 +199,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
 
           <Flex mb="4" justify="space-evenly" align="center">
             <Card size="sm">{tiredCard}</Card>
-            <Popover placement="top-end" isLazy>
+            <Popover placement="top-end">
               <PopoverTrigger>
                 <Button
                   colorScheme="purple"
