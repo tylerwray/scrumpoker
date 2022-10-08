@@ -103,7 +103,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
         <ModalCloseButton />
         <ModalBody paddingInline="4">
           <Flex justify="center" my="12">
-            <Card size="sm">144</Card>
+            <Card size="sm" value="144" cardColor={cardColor} />
           </Flex>
 
           <RadioGroup
@@ -181,7 +181,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
           </Heading>
 
           <Flex mb="4" justify="space-evenly" align="center">
-            <Card size="sm">{iDontKnowCard}</Card>
+            <Card size="sm" value={iDontKnowCard} cardColor={cardColor} />
             <Popover placement="top-end" isLazy>
               <PopoverTrigger>
                 <Button
@@ -205,7 +205,7 @@ export function SettingsModal({ isOpen, onClose }: Props) {
           </Heading>
 
           <Flex mb="4" justify="space-evenly" align="center">
-            <Card size="sm">{tiredCard}</Card>
+            <Card size="sm" cardColor={cardColor} value={tiredCard} />
             <Popover placement="top-end" isLazy>
               <PopoverTrigger>
                 <Button

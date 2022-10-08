@@ -4,8 +4,8 @@ import { Link } from "gatsby";
 import {
   Center,
   HStack,
-  Spacer,
   IconButton,
+  Spacer,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -26,7 +26,6 @@ const ICON_SIZE = 7;
 function Layout({ children, title, showBack = false }: Props) {
   const { toggleColorMode } = useColorMode();
   const ColorModeIcon = useColorModeValue(MoonIcon, SunIcon);
-
   return (
     <SettingsProvider>
       <SEO title={title} />
@@ -42,7 +41,6 @@ function Layout({ children, title, showBack = false }: Props) {
           />
         )}
         <Spacer />
-        {/* Move to settings Page */}
         <IconButton
           variant="ghost"
           size="lg"

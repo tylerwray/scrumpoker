@@ -1,14 +1,9 @@
-export type CardColor = {
-  slug: string;
-  name: string;
-  front: string;
-  back: string;
-};
+import { CardColor, CardSequence } from "../types";
 
-const toHash = (prev, curr) => {
+function toHash(prev: any, curr: any) {
   prev[curr.slug] = curr;
   return prev;
-};
+}
 
 export const presetCardColors: CardColor[] = [
   {
@@ -18,31 +13,31 @@ export const presetCardColors: CardColor[] = [
     back: "linear(to-l, pink.600, purple.700)",
   },
   {
-    slug: "orange-blue-circle",
+    slug: "orange_blue_circle",
     name: "Orange-Blue",
     front: "radial(orange.700, blue.400)",
     back: "radial(orange.700, blue.400)",
   },
   {
-    slug: "orange-purple-fade",
+    slug: "orange_purple_fade",
     name: "Orange-Purple",
     front: "linear(to-b, orange.300, purple.400)",
     back: "linear(to-b, orange.300, purple.400)",
   },
   {
-    slug: "yellow-red-fade",
+    slug: "yellow_red_fade",
     name: "Yellow-Red",
     front: "linear(to-r, yellow.500, red.600)",
     back: "linear(to-l, yellow.500, red.600)",
   },
   {
-    slug: "teal-yellow-fade",
+    slug: "teal_yellow_fade",
     name: "Teal-Yellow",
     front: "linear(to-tr, teal.400, yellow.400)",
     back: "linear(to-tl, teal.400, yellow.400)",
   },
   {
-    slug: "red-green-fade",
+    slug: "red_green_fade",
     name: "Red-Green",
     front: "linear(to-br, red.300, green.400)",
     back: "linear(to-bl, red.300, green.400)",
@@ -51,8 +46,6 @@ export const presetCardColors: CardColor[] = [
 
 export const presetCardColorsHash: { [key: string]: CardColor } =
   presetCardColors.reduce(toHash, {});
-
-export type CardSequence = { slug: string; name: string; values: string[] };
 
 export const presetCardSequences: CardSequence[] = [
   {

@@ -58,8 +58,11 @@ function EmojiPicker({ onChange }: Props) {
   const CSS = useColorModeValue(LIGHT_MODE_CSS, DARK_MODE_CSS);
 
   useEffect(() => {
-    document.querySelector<HTMLInputElement>(".emoji-search").placeholder =
-      "Search";
+    let element = document.querySelector<HTMLInputElement>(".emoji-search");
+
+    if (element) {
+      element.placeholder = "Search";
+    }
   }, []);
 
   return (

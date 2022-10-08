@@ -1,11 +1,7 @@
 import React, { useCallback } from "react";
 import { ReactNode, createContext, useMemo, useContext, useState } from "react";
-import {
-  CardColor,
-  CardSequence,
-  presetCardColors,
-  presetCardSequences,
-} from "./constants";
+import { CardColor, CardSequence } from "../types";
+import { presetCardColors, presetCardSequences } from "./constants";
 
 type SetterFunc<Value = string> = (newValue: Value) => void;
 

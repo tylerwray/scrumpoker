@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
-import { Flex, Box, useColorMode } from "@chakra-ui/react";
-import { useSettings } from "../settings";
+import { Flex, Box } from "@chakra-ui/react";
+import { CheckIcon } from "@chakra-ui/icons";
+import { CardColor } from "../types";
 import "./card.css";
 
 const noop = () => null;
@@ -10,6 +11,8 @@ type BaseProps = {
   onClick(): void;
   className: string;
   bg: string;
+  borderColor?: string;
+  borderWidth?: string;
 };
 
 function Base(props: BaseProps) {
@@ -30,28 +33,53 @@ function Base(props: BaseProps) {
 }
 
 type CardProps = {
-  children: ReactNode;
   isFlipped?: boolean;
-  onClick?(): void;
-  size?: "sm" | "lg";
+  isSelected?: boolean;
+  onClick?(card: string): void;
+  cardColor: CardColor
+  size?: "sm" | "md" | "lg";
+  value: string;
 };
 
 export function Card(props: CardProps) {
-  const { children, isFlipped = true, onClick = noop, size = "lg" } = props;
+  const {
+    isFlipped = true,
+    isSelected = false,
+    onClick = noop,
+    size = "lg",
+    cardColor,
+    value,
+  } = props;
 
-  const { cardColor } = useSettings();
+  function handleClick() {
+    onClick(value);
+  }
 
   // TODO: Look into animating this with framer motion
   return (
     <Box className="scene">
       <SizedCard size={size} isFlipped={isFlipped} className="card">
-        <Base onClick={onClick} bg={cardColor.back} className="card-face" />
+        <Base onClick={handleClick} bg={cardColor.back} className="card-face" />
         <Base
-          onClick={onClick}
+          onClick={handleClick}
           bg={cardColor.front}
           className="card-face card-front"
+          borderColor="green.500"
+          borderWidth={isSelected ? "4px" : ""}
         >
-          {children}
+          {isSelected && (
+            <CheckIcon
+              w="4"
+              h="4"
+              bg="green.500"
+              rounded="full"
+              position="absolute"
+              top="1"
+              right="1"
+              p="2px"
+            />
+          )}
+          {value}
         </Base>
       </SizedCard>
     </Box>
@@ -59,7 +87,7 @@ export function Card(props: CardProps) {
 }
 
 type SizedCardProps = {
-  size: "sm" | "lg";
+  size: "sm" | "md" | "lg";
   className: string;
   isFlipped: boolean;
   children: ReactNode;
@@ -67,6 +95,7 @@ type SizedCardProps = {
 
 const SIZES = {
   sm: { w: 16, h: 24, fontSize: "3xl" },
+  md: { w: 32, h: 48, fontSize: "6xl" },
   lg: { w: 80, h: 96, fontSize: "huge" },
 };
 

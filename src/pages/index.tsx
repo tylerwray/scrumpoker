@@ -1,12 +1,12 @@
 import React from "react";
 
 import Layout from "../layout";
-import { CardGrid } from "../poker";
+import { GameCenter } from "../poker";
 
 function IndexPage() {
   return (
-    <Layout title="Home">
-      <CardGrid />
+    <Layout title="Game Center">
+      <GameCenter />
     </Layout>
   );
 }
