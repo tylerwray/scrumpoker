@@ -6,6 +6,7 @@ import {
   useRadio,
   Grid,
   Box,
+  UseRadioProps,
 } from "@chakra-ui/react";
 
 type Props = {
@@ -60,7 +61,11 @@ export function RadioGroup({
   );
 }
 
-function Radio(props) {
+type RadioProps = UseRadioProps & {
+  children: React.ReactNode;
+};
+
+function Radio(props: RadioProps) {
   const { getInputProps, getCheckboxProps } = useRadio(props);
 
   const input = getInputProps();

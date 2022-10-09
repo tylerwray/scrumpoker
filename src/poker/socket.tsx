@@ -1,5 +1,6 @@
 import { Socket, Channel, Presence } from "phoenix";
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { Player } from "../types";
 import { storage } from "./storage";
 
 const PhoenixSocketContext = createContext<{ socket: Socket | null }>({
@@ -84,31 +85,52 @@ export function useSubscription({
 
 type PresenceSyncArguments = {
   channel: Channel | undefined;
-  onJoin: (userUuid: string) => void;
-  onLeave: (userUuid: string) => void;
+  callback: (players: Player[]) => void;
 };
 
-export function usePresenceSync({
-  channel,
-  onJoin,
-  onLeave,
-}: PresenceSyncArguments) {
+// Make this generic, not just for players
+export function usePresenceSync({ channel, callback }: PresenceSyncArguments) {
+  const [presence, setPresence] = useState<Presence>();
+  const [syncedInitial, setSyncedInitial] = useState(false);
+
+  // Create presence object
   useEffect(() => {
     if (channel) {
-      const presence = new Presence(channel);
-      presence.onJoin((userUuid) => {
-        if (userUuid) {
-          onJoin(userUuid);
-        }
-      });
-      presence.onLeave((userUuid) => {
-        if (userUuid) {
-          onLeave(userUuid);
-        }
-      });
-      // presence.onSync(() => {
-      //   presence.list(cb);
-      // });
+      setPresence(new Presence(channel));
     }
-  }, [channel, onJoin, onLeave]);
+  }, [channel]);
+
+  // Set update callback
+  useEffect(() => {
+    if (presence) {
+      presence.onSync(() => {
+        syncPlayers(presence, callback);
+      });
+    }
+  }, [presence, callback]);
+
+  // Sync initial State
+  useEffect(() => {
+    if (presence && !syncedInitial) {
+      setSyncedInitial(true);
+      syncPlayers(presence, callback);
+    }
+  }, [presence, callback, syncedInitial, setSyncedInitial]);
+}
+
+function syncPlayers(
+  presence: Presence,
+  callback: (players: Player[]) => void
+) {
+  let players: Player[] = [];
+
+  presence.list((playerId, newPresence) => {
+    const {
+      metas: [{ name }],
+    } = newPresence;
+
+    players.push({ id: playerId, name });
+  });
+
+  callback(players);
 }

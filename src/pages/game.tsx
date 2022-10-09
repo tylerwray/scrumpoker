@@ -1,21 +1,13 @@
 import React from "react";
 import Layout from "../layout";
-import { HostGrid } from "../poker/HostGrid";
-import { storage } from "../poker/storage";
+import { GameGrid } from "../poker/GameGrid";
 import { PhoenixSocketProvider } from "../poker/socket";
 
 function HostPage() {
-  const { code, generateNewCode } = storage.useCode();
-
-  if (!code) {
-    generateNewCode();
-    return null;
-  }
-
   return (
     <PhoenixSocketProvider>
       <Layout title="Host" showBack>
-        <HostGrid code={code} generateNewCode={generateNewCode} />
+        <GameGrid />
       </Layout>
     </PhoenixSocketProvider>
   );

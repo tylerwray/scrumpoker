@@ -14,13 +14,7 @@ function setCode(code: string) {
 }
 
 function useCode() {
-  const [code, setCode] = useLocalStorage(CODE_KEY);
-
-  function generateNewCode() {
-    setCode(generateCode());
-  }
-
-  return { code, generateNewCode };
+  return useLocalStorage(CODE_KEY);
 }
 
 function getName() {
@@ -93,15 +87,6 @@ function useLocalStorage(key: string): [string | null, (x: string) => void] {
   };
 
   return [storedValue, setValue];
-}
-
-function generateCode() {
-  let code = "";
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  for (let i = 0; i < 4; i++) {
-    code += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return code;
 }
 
 function randomAnmial() {

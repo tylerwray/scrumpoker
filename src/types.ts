@@ -8,8 +8,13 @@ export type CardColor = {
 export type CardSequence = { slug: string; name: string; values: string[] };
 
 export type PlayerSelection = {
-  cardColorSlug: string;
+  cardColorSlug?: string;
   id: string;
   name: string;
-  value: string;
+  value?: string;
+};
+
+export type Player = {
+  id: string;
+  name: string;
 };
