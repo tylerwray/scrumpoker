@@ -73,8 +73,12 @@ export function RegisterHost() {
     storage.setPlayerId(player.id);
     storage.setToken(player.token);
 
-    const game = await api.createGame();
+    const game = await api.createGame(values.description);
     storage.setCode(game.code);
+
+    if (game.description) {
+      storage.setDescription(game.description);
+    }
 
     navigate("/game");
   }

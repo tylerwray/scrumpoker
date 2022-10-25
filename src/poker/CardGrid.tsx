@@ -33,7 +33,7 @@ export function CardGrid() {
     setSelectedCard(card);
 
     const selection: PlayerSelection = {
-      cardColorSlug: cardColor.slug,
+      cardColor,
       id: playerId,
       name,
       value: card,

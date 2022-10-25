@@ -4,6 +4,7 @@ const CODE_KEY = "scrum_poker_game_code";
 const NAME_KEY = "scrum_poker_game_name";
 const PLAYER_ID_KEY = "scrum_poker_player_id";
 const TOKEN_KEY = "scrum_poker_token";
+const DESCRIPTION_KEY = "scrum_poker_game_description";
 
 function getCode() {
   return localStorage.getItem(CODE_KEY);
@@ -53,6 +54,14 @@ function setToken(token: string) {
   localStorage.setItem(TOKEN_KEY, token);
 }
 
+function getDescription() {
+  return localStorage.getItem(DESCRIPTION_KEY);
+}
+
+function setDescription(description: string) {
+  localStorage.setItem(DESCRIPTION_KEY, description);
+}
+
 export const storage = {
   getCode,
   setCode,
@@ -64,6 +73,8 @@ export const storage = {
   setPlayerId,
   getToken,
   setToken,
+  getDescription,
+  setDescription,
 };
 
 function useLocalStorage(key: string): [string | null, (x: string) => void] {

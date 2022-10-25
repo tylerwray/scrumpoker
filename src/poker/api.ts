@@ -23,19 +23,22 @@ async function createPlayer(name: string): Promise<PlayerResponse> {
 
 type GameResponse = {
   code: string;
+  description?: string;
 };
 
-async function createGame(): Promise<GameResponse> {
+async function createGame(description?: string): Promise<GameResponse> {
   // TODO: Use an environment variable for the URL
   const res = await fetch("http://localhost:4000/games", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "appliation/json" },
+    body: JSON.stringify({ description }),
   });
 
   const body = await res.json();
 
   return {
     code: body.code,
+    description: body.description,
   };
 }
 
