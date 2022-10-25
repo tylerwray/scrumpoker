@@ -65,9 +65,13 @@ export function GameCenter() {
   }
 
   function handleCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const newValues: Values = { ...values, code: e.target.value.toUpperCase() };
-    setErrors(validate(newValues));
-    setValues(newValues);
+    const code = e.target.value.toUpperCase();
+
+    if (/^[a-zA-Z0-9]+$/.test(code) || code === "") {
+      const newValues: Values = { ...values, code };
+      setErrors(validate(newValues));
+      setValues(newValues);
+    }
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -105,6 +109,7 @@ export function GameCenter() {
             onChange={handleCodeChange}
             onBlur={handleCodeBlur}
             maxLength={4}
+            pattern=""
           />
           <FormErrorMessage>{errors.code}</FormErrorMessage>
         </FormControl>
