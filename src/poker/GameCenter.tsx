@@ -109,7 +109,6 @@ export function GameCenter() {
             onChange={handleCodeChange}
             onBlur={handleCodeBlur}
             maxLength={4}
-            pattern=""
           />
           <FormErrorMessage>{errors.code}</FormErrorMessage>
         </FormControl>
